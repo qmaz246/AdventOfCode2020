@@ -29,7 +29,12 @@ def day4_part1(content_list):
 
 def day4_part2(content_list):
     valid = 0
+    print(len(content_list))
+
     for i in content_list:
+        if i[-1] == "\n":
+			i = i[:-1]
+			
         list = i.replace("\n", " ").split(" ")
         
         cid_present = 0
@@ -50,52 +55,43 @@ def day4_part2(content_list):
             if cid_present == 0:
                 valid_pass = 1
         
-        for j in list:
-            ky = j.split(":")[0]
-            val = j.split(":")[1]
-            if(ky=="byr"):
-                vals = int(val)
-                if vals < 1920 or vals > 2002:
-                    valid_pass = 0
-            
-            if(ky=="iyr"):
-                vals = int(val)
-                if vals < 2010 or vals > 2020:
-                    valid_pass = 0
-            
-            if(ky=="eyr"):
-                vals = int(val)
-                if vals < 2020 or vals > 2030:
-                    valid_pass = 0
-            
-            if(ky=="hgt"):
-                if "cm" in val:
-                    height = int(val[:-2])
-                    if height < 150 or height > 193:
-                        valid_pass = 0
-                elif "in" in val:
-                    height = int(val[:-2])
-                    if height < 59 or height > 76:
-                        valid_pass = 0
-                else:
-                    valid_pass = 0
-            
-            if(ky=="hcl"):
-                if not re.search("^#[0-9a-f]{6}", val):
-                    valid_pass = 0
+        if valid_pass == 1:
+			for j in list:
+				split_up = j.split(":")
+				ky = split_up[0]
+				val = split_up[1]
 
-            if(ky=="ecl"):
-                if val not in ["amb","blu","brn","gry","grn","hzl","oth"]:
-                    valid_pass = 0
-            
-            if(ky=="pid"):
-                if not re.search("[0-9]{9}", val):
-                    valid_pass = 0            
+				if(ky=="byr"):
+					if not re.search("(19[2-9][0-9]|200[012])", val):
+						valid_pass = 0
+				
+				if(ky=="iyr"):
+					if not re.search("(201[0-9]|2020)", val):
+						valid_pass = 0
+				
+				if(ky=="eyr"):
+					if not re.search("(202[0-9]|2030)", val):
+						valid_pass = 0
+				
+				if(ky=="hgt"):
+					if not re.search("((1[5678][0-9]|19[0123])cm|(59|6[0-9]|7[0-6])in)", val):
+						valid_pass = 0
+				
+				if(ky=="hcl"):
+					if not re.search("#[0-9a-f]{6}( |$)", val):
+						valid_pass = 0
+
+				if(ky=="ecl"):
+					if not re.search("(amb|blu|brn|gry|grn|hzl|oth)", val):
+						valid_pass = 0
+				
+				if(ky=="pid"):
+					if not re.search("[0-9]{9}( |$)", val):
+						valid_pass = 0        
 
         if valid_pass == 1:
             valid += 1
-            print(list)
-        #print(list, len(list), valid)
+            #print(list, len(list), valid_pass, valid)
     return valid
 
 if __name__ == "__main__":
@@ -103,6 +99,7 @@ if __name__ == "__main__":
     content = text_list.read()
     content_list = content.split("\n\n")
     text_list.close()
+    
     print(day4_part1(content_list))
 
     print(day4_part2(content_list))
