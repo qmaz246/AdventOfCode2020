@@ -6,8 +6,8 @@ struct bag {
 	char* color;
 	int num;
 	struct bag* baglist[100];
-	bool isLeaf;
-} bag;
+	int isLeaf;
+};
 
 int main(void){
 	
@@ -24,7 +24,7 @@ int main(void){
 	char pbag[300];
 	int colors = 0;
 	int pass = 0;
-	char curr_line[100];ose simple lookups are a simple array access.
+	char curr_line[100];
 	int loops = 0;
 	
 	fp = fopen("./Day7_input.txt", "r");
@@ -115,7 +115,9 @@ loop_end:
 	int num_in_bag = 0;
 	int a_i = 0;
 	int c_i = 0;
-	bag outside;
+	int ind = 0;
+	struct bag outside; // init for shiny gold
+	outside.color = "shiny gold";
 	strcpy(need_to_check[c_i++], "shiny gold");
 	loops = 0;
 	while(loops < 3){
@@ -132,7 +134,7 @@ loop_end:
 			
 			// Is this color already accounted for?
 			for(int i = 0; i < a_i; i++){
-				if(strcmp(0, accounted_for[i]==0){
+				if(strcmp(prule, accounted_for[i])==0){
 						pass = 1;
 						break;
 				}
@@ -140,14 +142,14 @@ loop_end:
 			if(pass == 1){		// yes in the accounted list, we can ignore
 				pass = 0;
 				// Advance to the end of line
-				while (pch != NULpch = strtok(NULL, " ");L){
+				while (pch != NULL){
 					pch = strtok(NULL, " ");
 				}
 				break;
 			} 
 			// otherwise not in accounted for list, now check in need to check list
 			for(int i = 0; i < c_i; i++){
-				if(strcmp(0, need_to_check[i]==0){
+				if(strcmp(0, need_to_check[i])==0){
 						pass = 1;
 						break;
 				}
@@ -155,11 +157,13 @@ loop_end:
 			if(pass == 1){	// yes in the need to check list, we need to see whats in here then add it to the queue.
 				pass = 0;
 				outside.color = prule;
+				struct 
 				// Advance to the start of inards
 				pch = strtok(NULL, " ");	// bags
 				pch = strtok(NULL, " "); 	// contain
 				while (pch != NULL){
 					pch = strtok(NULL, " "); // #
+					outside.num[ind] = 1
 					
 				}
 				break;
